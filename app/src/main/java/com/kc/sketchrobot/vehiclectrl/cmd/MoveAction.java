@@ -1,16 +1,16 @@
 package com.kc.sketchrobot.vehiclectrl.cmd;
 
+import android.graphics.Point;
+
 import com.kc.sketchrobot.coordinate.Coordinate;
 import com.kc.sketchrobot.coordinate.PolarCoordinate;
-
-import android.graphics.Point;
 
 public class MoveAction {
 
 	private GoForwardCommand goCommand;
 	private TurnCommand turnCommand;
 	private PolarCoordinate polarCoordinate;
-	private Point targetCartesainCoordinate;
+	private Point targetCartesianCoordinate;
 	private Point fromScreenCoordinate;
 	private Point toScreenCoordinate;
 	private int penWidth = 0;
@@ -37,7 +37,7 @@ public class MoveAction {
 		Point toPointOnCartesianCoordinate = Coordinate.screenToCartesianFirstQuadrant(
 				toPointOnScreen, 300);
 
-		this.setTargetCartesainCoordinate(toPointOnCartesianCoordinate);
+		this.setTargetCartesianCoordinate(toPointOnCartesianCoordinate);
 
 		PolarCoordinate pc = Coordinate.cartesianToPolar(fromPointOnCartesianCoordinate,
 				toPointOnCartesianCoordinate);
@@ -87,12 +87,12 @@ public class MoveAction {
 		this.polarCoordinate = polarCoordinate;
 	}
 
-	public Point getCartesainCoordinate() {
-		return targetCartesainCoordinate;
+	public Point getCartesianCoordinate() {
+		return targetCartesianCoordinate;
 	}
 
-	public void setTargetCartesainCoordinate(Point cartesainCoordinate) {
-		this.targetCartesainCoordinate = cartesainCoordinate;
+	public void setTargetCartesianCoordinate(Point cartesianCoordinate) {
+		this.targetCartesianCoordinate = cartesianCoordinate;
 	}
 
 	public Point getFromScreenCoordinate() {
@@ -111,7 +111,7 @@ public class MoveAction {
 		this.penWidth = penWidth;
 	}
 
-	public String[] toCommandString() {
+	private String[] toCommandString() {
 		String[] result = new String[2];
 		if (turnCommand != null) {
 			result[0] = turnCommand.toString();
@@ -128,10 +128,9 @@ public class MoveAction {
 	}
 
 	public String toString() {
-		String[] cmds = toCommandString();
+		String[] commands = toCommandString();
 
-		//return "(" + fromScreenCoordinate + " ,"+ toScreenCoordinate +") " + cmds[0] + ", " + cmds[1];
-		return cmds[0] + ", " + cmds[1];
+		return commands[0] + ", " + commands[1];
 	}
 
 	public Point getToScreenCoordinate() {

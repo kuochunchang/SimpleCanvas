@@ -5,8 +5,8 @@ public class TurnCommand {
 		LEFT, RIGHT
 	}
 
-	private static final String TRUN_RIGHT_CMD = "RIGHT";
-	private static final String TRUN_LEFT_CMD = "LEFT";
+	private static final String TURN_RIGHT_CMD = "RIGHT";
+	private static final String TURN_LEFT_CMD = "LEFT";
 
 	private Direction direction;
 	private int angle;
@@ -36,9 +36,9 @@ public class TurnCommand {
 		switch (direction) {
 		
 		case LEFT:
-			return TRUN_LEFT_CMD + "(" + angle + ")";
+			return TURN_LEFT_CMD + "(" + angle + ")";
 		case RIGHT:
-			return TRUN_RIGHT_CMD + "(" + angle + ")";
+			return TURN_RIGHT_CMD + "(" + angle + ")";
 		
 		default:
 			break;

@@ -1,6 +1,6 @@
 package com.kc.sketchrobot.service;
 
-public class ChannelValues {
+class ChannelValues {
 
 	private static final int CMD = 0;
 	private static final int VAL = 1;

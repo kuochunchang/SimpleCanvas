@@ -2,7 +2,7 @@ package com.kc.sketchrobot.vehiclectrl.cmd;
 
 public class GoForwardCommand {
 	private static final String GO_FORWARD_CMD = "GO";
-	int distance;
+	private int distance;
 
 	public int getDistance() {
 		return distance;

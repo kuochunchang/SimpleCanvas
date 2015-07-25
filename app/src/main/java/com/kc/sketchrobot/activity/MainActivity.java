@@ -28,7 +28,7 @@ public class MainActivity extends ActionBarActivity {
 
 	private static VehicleDriver mVehicleDriver;
 
-	class BluetoothHandlerConnection implements ServiceConnection {
+	private class BluetoothHandlerConnection implements ServiceConnection {
 		public void onServiceConnected(ComponentName name, IBinder boundService) {
 			mBluetoothHandlerService = ((BluetoothHandler.LocalBinder) boundService)
 					.getService();		

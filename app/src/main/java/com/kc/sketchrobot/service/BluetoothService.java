@@ -16,17 +16,11 @@ package com.kc.sketchrobot.service;
  * limitations under the License.
  */
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.UUID;
-
 import android.app.Service;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.Bundle;
@@ -34,7 +28,11 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.util.Log;
-import android.widget.Toast;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.UUID;
 
 /**
  * This class does all the work for setting up and managing Bluetooth
@@ -66,7 +64,7 @@ public class BluetoothService extends Service {
 
 	public static final int MESSAGE_PAIRED_DEVICE = 6;
 	public static final int MESSAGE_NEW_DEVICE = 7;
-	public static final int MESSAGE_DISCOVERY_DEVICE_STOPED = 8;
+	public static final int MESSAGE_DISCOVERY_DEVICE_STOPPED = 8;
 
 	// Member fields
 
@@ -87,7 +85,7 @@ public class BluetoothService extends Service {
 													// device
 
 	public BluetoothService() {
-	};
+	}
 
 	private Binder mBinder = new LocalBinder();
 
@@ -272,7 +270,6 @@ public class BluetoothService extends Service {
 	 * 
 	 * @param out
 	 *            The bytes to write
-	 * @see BluetoothService.coconauts.net.quadcopter.Bluetooth.ConnectedThread#write(byte[])
 	 */
 	private void write(byte[] out) {
 		//Log.i("BtSend", new String(out));

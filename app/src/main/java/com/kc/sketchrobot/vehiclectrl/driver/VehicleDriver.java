@@ -45,7 +45,7 @@ public class VehicleDriver implements IVehicleStatusListener, IVehicleDriver {
 				}
 				break;
 
-			case ASK_RESEND_NEXT_ACTION_FROM_VEHICLEEND:
+			case ASK_RESEND_NEXT_ACTION_FROM_VEHICLE:
 				moveAction = driveNavigation.getMoveAction(actionStepCounter);
 				sendCommandToVehicle(moveAction.getTurnCommand(),
 						moveAction.getGoCommand());

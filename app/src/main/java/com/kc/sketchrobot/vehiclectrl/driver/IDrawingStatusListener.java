@@ -1,13 +1,13 @@
 package com.kc.sketchrobot.vehiclectrl.driver;
 
-import java.util.List;
-
 import com.kc.sketchrobot.vehiclectrl.cmd.MoveAction;
 
-public interface IDrawingStatusListener {
+import java.util.List;
 
-	public abstract void addCompletedPoint(MoveAction moveAction);
+interface IDrawingStatusListener {
 
-	public abstract List<MoveAction> getCompletedPoints();
+	void addCompletedPoint(MoveAction moveAction);
+
+	List<MoveAction> getCompletedPoints();
 
 }

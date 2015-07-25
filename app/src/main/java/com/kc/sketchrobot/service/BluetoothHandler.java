@@ -1,7 +1,5 @@
 package com.kc.sketchrobot.service;
 
-import java.lang.ref.WeakReference;
-
 import android.app.Service;
 import android.bluetooth.BluetoothDevice;
 import android.content.ComponentName;
@@ -23,6 +21,8 @@ import com.kc.sketchrobot.vehiclectrl.cmd.TurnCommand;
 import com.kc.sketchrobot.vehiclectrl.driver.IVehicleStatusListener;
 import com.kc.sketchrobot.vehiclectrl.status.VehicleStatus;
 
+import java.lang.ref.WeakReference;
+
 public class BluetoothHandler extends Service implements IMoveActionSender,
 		IBtDeviceManager {
 
@@ -32,7 +32,7 @@ public class BluetoothHandler extends Service implements IMoveActionSender,
 	
 
 
-	private IVehicleStatusListener vehicleStatusListener;
+	private static IVehicleStatusListener  vehicleStatusListener;
 
 	public BluetoothHandler() {
 
@@ -41,13 +41,13 @@ public class BluetoothHandler extends Service implements IMoveActionSender,
 	private ChannelValues channelValues = new ChannelValues();
 	private static BluetoothService mBluetooth;
 
-	String tag = BluetoothHandler.class.getSimpleName();
-	Binder mBinder = new LocalBinder();
-	BluetoothServiceConnection mBluetoothServiceConnection;
+	private final static String tag = BluetoothHandler.class.getSimpleName();
+	private Binder mBinder = new LocalBinder();
 
-	private void initBluetoothServie() {
 
-		mBluetoothServiceConnection = new BluetoothServiceConnection();
+	private void initBluetoothServce() {
+
+		BluetoothServiceConnection mBluetoothServiceConnection = new BluetoothServiceConnection();
 
 		boolean ret = bindService(new Intent(BluetoothHandler.this,
 				BluetoothService.class), mBluetoothServiceConnection,
@@ -93,7 +93,7 @@ public class BluetoothHandler extends Service implements IMoveActionSender,
 
 	@Override
 	public void onCreate() {
-		initBluetoothServie();
+		initBluetoothServce();
 		super.onCreate();
 	}
 
@@ -102,7 +102,7 @@ public class BluetoothHandler extends Service implements IMoveActionSender,
 		super.onDestroy();
 		Log.d("ChannelValueService", "onDestroy()");
 	}
-
+private
 	class BluetoothServiceConnection implements ServiceConnection {
 
 		@Override
@@ -118,12 +118,12 @@ public class BluetoothHandler extends Service implements IMoveActionSender,
 
 	}
 
-	class IncomingHandler extends Handler {
+	static class IncomingHandler extends Handler {
 		private final WeakReference<BluetoothHandler> mTarget;
 
 		IncomingHandler(BluetoothHandler context) {
 			mTarget = new WeakReference<BluetoothHandler>(
-					(BluetoothHandler) context);
+					context);
 		}
 
 		@Override

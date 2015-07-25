@@ -1,7 +1,5 @@
 package com.kc.sketchrobot.view;
 
-import java.util.ArrayList;
-
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -13,20 +11,19 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.example.simplecanvas.R;
-import com.kc.sketchrobot.vehiclectrl.cmd.GoForwardCommand;
 import com.kc.sketchrobot.vehiclectrl.cmd.MoveAction;
-import com.kc.sketchrobot.vehiclectrl.cmd.TurnCommand;
-import com.kc.sketchrobot.vehiclectrl.driver.ChannelValueListener;
 import com.kc.sketchrobot.vehiclectrl.driver.DrawingManager;
 import com.kc.sketchrobot.vehiclectrl.driver.ICanvasStatusUpdateListener;
+
+import java.util.ArrayList;
 
 public class CanvasView extends View {
 	private String tag = "CanvasView";
 	private DrawingManager drawingManager;
 
-	
-	
-	private ChannelValueListener channelValueListener;
+/*
+
+	private ChannelValueListener channelValueListener;*/
 
 	public CanvasView(Context context) {
 		super(context);
@@ -148,9 +145,9 @@ public class CanvasView extends View {
 
 	enum Command {
 		GO(1), TURN_LEFT(2), TURN_RIGHT(3);
-		private int value;
+		int value;
 
-		private Command(int value) {
+		Command(int value) {
 			this.value = value;
 		}
 
@@ -160,7 +157,7 @@ public class CanvasView extends View {
 
 	}
 
-	private void robotGoto(int step) {
+	/*private void robotGoto(int step) {
 
 		MoveAction moveAction = drawingManager.getMoveActionList().get(step);
 		GoForwardCommand go = moveAction.getGoCommand();
@@ -177,7 +174,7 @@ public class CanvasView extends View {
 					Command.TURN_RIGHT.getValue(), turn.getAngle());
 		}
 
-	}
+	}*/
 
 	public void transform() {
 		drawingManager.drawingComplete();
@@ -214,14 +211,6 @@ public class CanvasView extends View {
 
 	}
 
-	public ChannelValueListener getChannelValueListener() {
-		return channelValueListener;
-	}
-
-	public void setChannelValueListener(
-			ChannelValueListener channelValueListener) {
-		this.channelValueListener = channelValueListener;
-	}
 
 	public void setDrawingManager(DrawingManager drawingManager) {
 		this.drawingManager = drawingManager;

@@ -6,9 +6,9 @@ import android.graphics.Point;
 
 
 public class Coordinate {
-	static public Point screenToCartesianFirstQuadrant(Point p, int screenHight) {
+	static public Point screenToCartesianFirstQuadrant(Point p, int screenHeight) {
 
-		return new Point(p.x, screenHight - p.y);
+		return new Point(p.x, screenHeight - p.y);
 
 	}
 	

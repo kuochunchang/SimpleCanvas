@@ -1,10 +1,5 @@
 package com.kc.sketchrobot.activity;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
@@ -31,20 +26,24 @@ import android.widget.TextView;
 import com.example.simplecanvas.R;
 import com.kc.sketchrobot.service.BluetoothHandler;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 public class BluetoothSetupActivity extends ActionBarActivity {
 
-	private ListView btDeviceListView;
 	private BtDeviceAdapter mBtDeviceAdapter;
 	private List<BluetoothDevice> bundedDeviceList;
 	private BluetoothAdapter mAdapter;
 	private final static int REQUEST_ENABLE_BT = 1;
 
-	String tag = BluetoothSetupActivity.class.getSimpleName();
+    private final static String tag = BluetoothSetupActivity.class.getSimpleName();
 	private BluetoothHandler mBluetoothHandlerService;
 	private BluetoothHandlerConnection mBluetoothHandlerConnection;
 
-	class BluetoothHandlerConnection implements ServiceConnection {
-		
+	private class BluetoothHandlerConnection implements ServiceConnection {
+
 		public void onServiceConnected(ComponentName name, IBinder boundService) {
 			mBluetoothHandlerService = ((BluetoothHandler.LocalBinder) boundService)
 					.getService();
@@ -100,15 +99,17 @@ public class BluetoothSetupActivity extends ActionBarActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		ListView btDeviceListView;
+
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_bluetooth_setup);
 
 		bundedDeviceList = new ArrayList<BluetoothDevice>();
 		btDeviceListView = (ListView) findViewById(R.id.btDeviceListView);
 		mBtDeviceAdapter = new BtDeviceAdapter();
-		
+
 		initBluetoothService();
-		
+
 		btDeviceListView.setAdapter(mBtDeviceAdapter);
 		btDeviceListView.setOnItemClickListener(new OnItemClickListener() {
 
@@ -126,7 +127,7 @@ public class BluetoothSetupActivity extends ActionBarActivity {
 
 		});
 
-		
+
 
 		// startService(new Intent(this, BluetoothService.class));
 	}
@@ -165,11 +166,11 @@ public class BluetoothSetupActivity extends ActionBarActivity {
 	}
 
 	private class BtDeviceAdapter extends BaseAdapter {
-		private LayoutInflater inflator;
+		private LayoutInflater inflater;
 
 		public BtDeviceAdapter() {
 			super();
-			inflator = BluetoothSetupActivity.this.getLayoutInflater();
+			inflater = BluetoothSetupActivity.this.getLayoutInflater();
 		}
 
 		@Override
@@ -194,12 +195,12 @@ public class BluetoothSetupActivity extends ActionBarActivity {
 		public View getView(int i, View view, ViewGroup viewGroup) {
 			BtDeviceItemViewHolder viewHolder;
 			if (view == null) {
-				view = inflator.inflate(R.layout.bt_device_list_item, null);
+				view = inflater.inflate(R.layout.bt_device_list_item, null);
 				viewHolder = new BtDeviceItemViewHolder();
 				viewHolder.deviceName = (TextView) view
-						.findViewById(R.id.btName);
+                        .findViewById(R.id.btName);
 				viewHolder.address = (TextView) view
-						.findViewById(R.id.btAddress);
+                        .findViewById(R.id.btAddress);
 
 			} else {
 				viewHolder = (BtDeviceItemViewHolder) view.getTag();
@@ -223,7 +224,7 @@ public class BluetoothSetupActivity extends ActionBarActivity {
 	}
 
 	// Register the BroadcastReceiver
-	IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+	private IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
 	// Create a BroadcastReceiver for ACTION_FOUND
 	private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
 		public void onReceive(Context context, Intent intent) {
@@ -233,7 +234,7 @@ public class BluetoothSetupActivity extends ActionBarActivity {
 
 				// Get the BluetoothDevice object from the Intent
 				BluetoothDevice device = intent
-						.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+                        .getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
 
 				Log.i(tag, device + " found.");
 
@@ -243,23 +244,23 @@ public class BluetoothSetupActivity extends ActionBarActivity {
 		}
 	};
 
-	public void findNewDevice(final int duration) {
-		Log.i(tag, "Start to discover devices in " + duration + " miliseconds");
+	private void findNewDevice(final int duration) {
+		Log.i(tag, "Start to discover devices in " + duration + " milliseconds");
 		mAdapter.startDiscovery();
 
 		Thread t = new Thread(new Runnable() {
 
 			long startTime = System.currentTimeMillis();
 
-			boolean discovereryCanceled = false;
+			boolean discoveryCanceled = false;
 
 			@Override
 			public void run() {
-				while (!discovereryCanceled) {
+				while (!discoveryCanceled) {
 					if (System.currentTimeMillis() - startTime > duration) {
 						mAdapter.cancelDiscovery();
 
-						discovereryCanceled = true;
+						discoveryCanceled = true;
 
 					}
 
@@ -278,10 +279,10 @@ public class BluetoothSetupActivity extends ActionBarActivity {
 
 	}
 
-	public Set<BluetoothDevice> getPairedBluetoothDevices() {
+	private Set<BluetoothDevice> getPairedBluetoothDevices() {
 		if (mAdapter.isEnabled()) {
 			Set<BluetoothDevice> pairedBluetoothDevices = mAdapter
-					.getBondedDevices();
+                    .getBondedDevices();
 			Log.i(tag, pairedBluetoothDevices.size() + " paired devices.");
 
 			return pairedBluetoothDevices;

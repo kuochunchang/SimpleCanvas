@@ -1,9 +1,5 @@
 package com.kc.sketchrobot.vehiclectrl.driver;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-
 import android.graphics.Point;
 
 import com.kc.sketchrobot.coordinate.Coordinate;
@@ -11,11 +7,15 @@ import com.kc.sketchrobot.vehiclectrl.cmd.IDriveNavigation;
 import com.kc.sketchrobot.vehiclectrl.cmd.MoveAction;
 import com.kc.sketchrobot.vehiclectrl.status.TransformStatus;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
 public class DrawingManager implements IDriveNavigation, IDrawingStatusListener {
-	List<ArrayList<Point>> screenTraceList = new ArrayList<ArrayList<Point>>();
-	LinkedList<MoveAction> moveActionList;
-	ArrayList<MoveAction> completedPoints = new ArrayList<MoveAction>();
-	ICanvasStatusUpdateListener canvasStatusListener;
+	private List<ArrayList<Point>> screenTraceList = new ArrayList<ArrayList<Point>>();
+	private LinkedList<MoveAction> moveActionList;
+	private ArrayList<MoveAction> completedPoints = new ArrayList<MoveAction>();
+	private ICanvasStatusUpdateListener canvasStatusListener;
 
 	public LinkedList<MoveAction> getMoveActionList() {
 		return moveActionList;
@@ -78,24 +78,24 @@ public class DrawingManager implements IDriveNavigation, IDrawingStatusListener 
 
 		for (int s = 0; s < screenTraceList.size(); s++) {
 			if (s == 0) {
-				status = TransformStatus.STRAT_THE_FIRST_SEG;
+				status = TransformStatus.START_THE_FIRST_SEG;
 			} else {
 				status = TransformStatus.FROM_SEG_TO_SEG;
 			}
 
-			if (status == TransformStatus.STRAT_THE_FIRST_SEG) {
+			if (status == TransformStatus.START_THE_FIRST_SEG) {
 				status = TransformStatus.IN_SEG;
 			}
 
 			if (status == TransformStatus.FROM_SEG_TO_SEG) {
 				// create a connection move action for both segment
-				MoveAction priviousMoveAction = moveActionList.getLast();
+				MoveAction previousMoveAction = moveActionList.getLast();
 
-				standAngle = priviousMoveAction.getPolarCoordinate().getAngle();
+				standAngle = previousMoveAction.getPolarCoordinate().getAngle();
 				Point theFirstPointOfSegment = screenTraceList.get(s).get(0);
 
 				MoveAction moveAction = new MoveAction(
-						priviousMoveAction.getToScreenCoordinate(),
+						previousMoveAction.getToScreenCoordinate(),
 						theFirstPointOfSegment, standAngle, 1);
 
 				moveActionList.add(moveAction);
@@ -110,7 +110,7 @@ public class DrawingManager implements IDriveNavigation, IDrawingStatusListener 
 				MoveAction theLastMoveActionOfSegment = null;
 
 				Point fromPointOnScreen = null;
-				Point toPointOnScreen = null;
+				Point toPointOnScreen;
 				for (int i = 0; i < segment.size() - 1; i++) {
 					if (i == 0) {
 						fromPointOnScreen = segment.get(0);
